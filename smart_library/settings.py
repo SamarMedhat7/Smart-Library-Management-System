@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'library',
+    'celery',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,26 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# celery
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Example using Redis
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'update-fines-every-midnight': {
+        'task': 'library.tasks.update_fines_task',
+        'schedule': crontab(hour=0, minute=0),  # Every day at midnight
+    },
+}
+
+# email configure
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.your-email-provider.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@example.com'
+EMAIL_HOST_PASSWORD = 'your-password'
