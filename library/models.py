@@ -11,6 +11,9 @@ class Book(models.Model):
     is_available = models.BooleanField(default=True)
     rating = models.FloatField(default=0.0)
 
+    def __str__(self):
+        return self.title
+
 class Borrow(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
@@ -18,6 +21,9 @@ class Borrow(models.Model):
     due_date = models.DateField()
     returned = models.BooleanField(default=False)
     fine = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.book.title}"
 
     def update_fine(self):
         if not self.returned:
