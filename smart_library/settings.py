@@ -147,3 +147,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your-email@example.com'
 EMAIL_HOST_PASSWORD = 'your-password'
+
+#payment configure
+PAYPAL_CLIENT_ID = 'your_client_id'
+PAYPAL_CLIENT_SECRET = 'your_client_secret'
+PAYPAL_MODE = 'sandbox'  # Change to 'live' in production
